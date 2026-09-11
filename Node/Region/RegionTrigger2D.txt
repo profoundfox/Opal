@@ -1,0 +1,87 @@
+using System;
+using System.Linq;
+using Microsoft.Xna.Framework;
+
+namespace Opal.Hierarchy
+{
+  public class RegionNode2D : CollisionNode2D
+  {
+    public RegionNode2D[] GetOverlappingAreas()
+    {
+      for (int i = 0; i < CollisionShapes.Count; i++)
+      {
+        var shape = CollisionShapes[i];
+
+        Rectangle bounds = new Rectangle
+        (
+          (int)Transform.Global.Position.X,
+          (int)Transform.Global.Position.Y,
+          (int)shape.Width,
+          (int)shape.Height
+        );
+
+        var query = Core.Physics.Query([bounds]);
+
+        for (int j = 0; j < query.Count; j++)
+        {
+          var body = query[j];
+          if body.Intersects(this)
+          
+        }
+      }
+      return Core.Token.GetAll()
+        .Where(a => a != this && a is RegionNode2D area && Intersects(area))
+        .Cast<RegionNode2D>();
+    }
+
+    public PhysicsBody2D[] GetOverlappingBodies()
+    {
+      throw new NotImplementedException();
+    }
+
+    public bool HasOverlappingAreas()
+    {
+      throw new NotImplementedException();
+    }
+    
+    public bool HasOverlappingBodies()
+    {
+      throw new NotImplementedException();
+    }
+
+    public bool OverlapsArea(Area2D area)
+    {
+      throw new NotImplementedException();
+    }
+
+    public bool OverlapsBody(PhysicsBody2D body)
+    {
+      throw new NotImplementedException();
+    }
+
+    public override void _EnterTree()
+    {
+      base._EnterTree();
+    }
+
+    public override void _Process(float delta)
+    {
+      base._Process(delta);
+    }
+
+    public override void _PhysicsUpdate(float delta)
+    {
+      base._PhysicsUpdate(delta);
+    }
+
+    public override void _Submit(Managers.Canvas2D canvas)
+    {
+      base._Submit(canvas);
+    }
+
+    public override void _ExitTree()
+    {
+      base._ExitTree();
+    }
+  }
+}
