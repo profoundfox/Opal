@@ -58,12 +58,16 @@ namespace Opal.Hierarchy
           inverse
       );
 
-      return new Rectangle(
+      var rect = new Rectangle(
           (int)topLeft.X,
           (int)topLeft.Y,
           (int)(bottomRight.X - topLeft.X),
           (int)(bottomRight.Y - topLeft.Y)
       );
+    
+      Console.WriteLine(rect.ToString());
+        
+      return rect;
     }
 
     /// <summary>

@@ -101,7 +101,7 @@ namespace Opal
     /// <remarks>
     /// This is rarely – if ever – accessed by the user, though it is very important to the performance of the engine.
     /// </remarks>
-    public static PhysicsServer2D Physics { get; private set; }
+    public static BroadPhaseServer2D Physics { get; private set; }
   
     /// <summary>
     /// Whether the game should exit when <see cref="Keys.Escape"/> or <see cref="Buttons.Start"/> is pressed
@@ -139,7 +139,7 @@ namespace Opal
 
       Resource = new ResourceManager();
       Token = new TokenIndex();
-      Physics = new PhysicsServer2D();
+      Physics = new BroadPhaseServer2D();
       Input = new InputManager();
 
       base.Initialize();

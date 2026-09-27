@@ -8,19 +8,19 @@ using Opal.Hierarchy;
 
 namespace Opal.Managers
 {
-  public class PhysicsServer2D : BaseObject
+  public class BroadPhaseServer2D : BaseObject
   {
-    private readonly SpatialHash<PhysicsBody2D> _broadphase;
+    private readonly SpatialHash<CollisionNode2D> _broadphase;
 
-    public PhysicsServer2D()
+    public BroadPhaseServer2D()
     {
-      _broadphase = new SpatialHash<PhysicsBody2D>(16);
+      _broadphase = new SpatialHash<CollisionNode2D>(16);
     }
 
     /// <summary>
     /// Registers a physics body to the server.
     /// </summary>
-    public void RegisterBody(PhysicsBody2D body)
+    public void RegisterBody(CollisionNode2D body)
     {
       _broadphase.Insert(body);
     }
@@ -28,7 +28,7 @@ namespace Opal.Managers
     /// <summary>
     /// Removes a physics body from the server.
     /// </summary>
-    public void UnregisterBody(PhysicsBody2D body)
+    public void UnregisterBody(CollisionNode2D body)
     {
       _broadphase.Remove(body);
     }
@@ -36,7 +36,7 @@ namespace Opal.Managers
     /// <summary>
     /// Notify the broadphase that a body moved.
     /// </summary>
-    public void NotifyMoved(PhysicsBody2D body)
+    public void NotifyMoved(CollisionNode2D body)
     {
       _broadphase.Update(body);
     }
@@ -44,7 +44,7 @@ namespace Opal.Managers
     /// <summary>
     /// Queries all bodies intersecting the given area.
     /// </summary>
-    public List<PhysicsBody2D> Query(List<Rectangle> area)
+    public List<CollisionNode2D> Query(List<Rectangle> area)
     {
       return _broadphase.Query(area.ToArray());
     }

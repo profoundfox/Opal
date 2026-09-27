@@ -107,7 +107,7 @@ namespace Opal.Hierarchy
       if (!OneWay || Shape == null)
         return;
 
-      var kb = Core.Token.Get<KinematicBody2D>();
+      var kb = Core.Token.Get<CharacterBody2D>();
 
       if (kb == null)
         return;

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Opal.Hierarchy
 {
 
-  public class CollisionNode2D : Node2D
+  public class CollisionNode2D : Node2D, IHashAble
   {
     public List<CollisionShape2D> CollisionShapes { get => GetAll<CollisionShape2D>().ToList(); }
 
@@ -206,11 +206,34 @@ namespace Opal.Hierarchy
 
     public override void _EnterTree()
     {
+      OnChildAdded += (node) =>
+      {
+        if (node is not CollisionShape2D)
+          return;
+
+        Core.Physics.RegisterBody(this);
+        Core.Physics.NotifyMoved(this);
+      };
+
+      OnTransformChanged += (transform) =>
+      {
+        Core.Physics.NotifyMoved(this);
+      };
+
+
       base._EnterTree();
+
+      if (!CollisionShapes.IsEmpty())
+      {
+        Core.Physics.RegisterBody(this);
+        Core.Physics.NotifyMoved(this);
+      }
     }
 
     public override void _ExitTree()
     {
+      Core.Physics.UnregisterBody(this);
+
       base._ExitTree();
     }
 
