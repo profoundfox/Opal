@@ -24,8 +24,17 @@ namespace Opal.Hierarchy
     public float FloorTolerance { get; set; } = 2f;
     
     /// <summary>
-    /// Uses the provided <see cref="Velocity"/> to move the body. 
+    /// Moves the body based on <see cref="Velocity"/>. If collided with another <see cref="PhysicsBody2D"/>, the player will stop, being unable to pass through. 
     /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Multiplies by the <see cref="delta"/>, if that is not preferred, use 
+    /// </para>
+    /// <para>
+    /// This does handle push-out if the body has accelarated too quickly, but this is not immediate. So it is recomended to not use too high velocities, or use a <see cref="Raycast2D"/> to do ground-checking.
+    /// </para>
+    /// </remarks>
+    /// <param name="delta"> The space between frames. <see cref="Velocity"/> is multiplied by it to prevent movement spikes. 
     public void MoveAndSlide(float delta)
     {
       if (CollisionShapes.Count == 0)
@@ -53,6 +62,8 @@ namespace Opal.Hierarchy
     /// <summary>
     /// Handles horizontal collision, sets the <see cref="WallBody"/> and penetration.
     /// </summary>
+    /// <param name="movement"> The current product of <see cref="Velocity"/> multiplied by delta.</param>
+    /// <param name="nearby"> The <see cref="CollisionNode2D">s that are near the body.</param>
     private void Horizontal(ref Vector2 movement, List<CollisionNode2D> nearby)
     {
       Vector2 horizontalMovement = new Vector2(movement.X, 0);
@@ -105,6 +116,8 @@ namespace Opal.Hierarchy
     /// <summary>
     /// Handles vertical collision, setting the current <see cref="FloorBody"/> and penetration.
     /// </summary>
+    /// <param name="movement"> The current product of <see cref="Velocity"/> multiplied by delta.</param>
+    /// <param name="nearby"> The <see cref="CollisionNode2D">s that are near the body.</param>
     private void Vertical(ref Vector2 movement, List<CollisionNode2D> nearby)
     {
       Vector2 verticalMovement = new Vector2(0, movement.Y);
@@ -151,6 +164,8 @@ namespace Opal.Hierarchy
     /// <remarks>
     /// If the velocity is too high, you can *briefly* clip into the ground. The body will still get pushed out, but it can look a bit off.
     /// </remarks>
+    /// <param name="other"> The other body, the one the body gets pushed out of. </param>
+    /// <param name="fromBottom"> Whether the other body is from the bottom of this body or not.</param>
     private void VerticalPenetration(CollisionNode2D other, bool fromBottom)
     {
       foreach (var a in this.Bounds)
@@ -174,41 +189,6 @@ namespace Opal.Hierarchy
       }
     }
 
-    private void StaticPenetration_(List<CollisionNode2D> nearby)
-    {
-      foreach (var other in nearby.Where(b => b != this))
-      {
-        if (!this.Intersects(other)) continue;
-
-        foreach (var a in this.Bounds)
-          foreach (var b in other.Bounds)
-          {
-            if (!a.Intersects(b)) continue;
-
-            float moveRight = b.Right - a.Left;
-            float moveLeft = a.Right - b.Left;
-            float moveDown = b.Bottom - a.Top;
-            float moveUp = a.Bottom - b.Top;
-
-            float minX = Math.Min(moveRight, moveLeft);
-            float minY = Math.Min(moveDown, moveUp);
-
-            if (minX < minY)
-            {
-              Position += new Vector2(
-                  moveRight < moveLeft ? moveRight : -moveLeft,
-                  0);
-            }
-            else
-            {
-              Position += new Vector2(
-                  0,
-                  moveDown < moveUp ? moveDown : -moveUp);
-            }
-          }
-      }
-    }
-    
     private void StaticPenetration(List<CollisionNode2D> nearby)
     {
       for (int i = 0; i < nearby.Count; i++)
