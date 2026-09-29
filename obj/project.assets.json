@@ -166,6 +166,127 @@
           "lib/netcoreapp2.0/_._": {}
         }
       }
+    },
+    "net9.0/osx-arm64": {
+      "ImGui.NET/1.91.6.1": {
+        "type": "package",
+        "dependencies": {
+          "System.Buffers": "4.5.1",
+          "System.Numerics.Vectors": "4.5.0",
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
+        },
+        "compile": {
+          "lib/net8.0/ImGui.NET.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/ImGui.NET.dll": {
+            "related": ".xml"
+          }
+        },
+        "native": {
+          "runtimes/osx/native/libcimgui.dylib": {}
+        }
+      },
+      "MonoGame.Framework.DesktopGL/3.8.2.1105": {
+        "type": "package",
+        "dependencies": {
+          "MonoGame.Library.SDL": "2.26.5.5",
+          "NVorbis": "0.10.4"
+        },
+        "compile": {
+          "lib/net8.0/MonoGame.Framework.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/MonoGame.Framework.dll": {
+            "related": ".xml"
+          }
+        },
+        "native": {
+          "runtimes/osx/native/libopenal.1.dylib": {}
+        },
+        "build": {
+          "build/MonoGame.Framework.DesktopGL.targets": {}
+        }
+      },
+      "MonoGame.Library.SDL/2.26.5.5": {
+        "type": "package",
+        "native": {
+          "runtimes/osx/native/libSDL2.dylib": {}
+        }
+      },
+      "NVorbis/0.10.4": {
+        "type": "package",
+        "dependencies": {
+          "System.Memory": "4.5.3",
+          "System.ValueTuple": "4.5.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/NVorbis.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/NVorbis.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "System.Buffers/4.5.1": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/_._": {}
+        }
+      },
+      "System.Memory/4.5.3": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.1/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.1/_._": {}
+        }
+      },
+      "System.Numerics.Vectors/4.5.0": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/_._": {}
+        }
+      },
+      "System.Runtime.CompilerServices.Unsafe/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/netcoreapp3.1/_._": {}
+        }
+      },
+      "System.ValueTuple/4.5.0": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/_._": {}
+        }
+      }
     }
   },
   "libraries": {
@@ -487,7 +608,15 @@
             "version": "[9.0.12, 9.0.12]"
           },
           {
+            "name": "Microsoft.AspNetCore.App.Runtime.osx-arm64",
+            "version": "[9.0.12, 9.0.12]"
+          },
+          {
             "name": "Microsoft.NETCore.App.Ref",
+            "version": "[9.0.12, 9.0.12]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Runtime.osx-arm64",
             "version": "[9.0.12, 9.0.12]"
           }
         ],
@@ -497,6 +626,11 @@
           }
         },
         "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.102/PortableRuntimeIdentifierGraph.json"
+      }
+    },
+    "runtimes": {
+      "osx-arm64": {
+        "#import": []
       }
     }
   }
