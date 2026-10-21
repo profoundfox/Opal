@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "dVQQ5mzOxX8=",
+  "dgSpecHash": "7X9UiKZBYwI=",
   "success": true,
   "projectFilePath": "/Users/nilslauvstad/Git/Opal/Opal.csproj",
   "expectedPackageFiles": [
@@ -14,9 +14,7 @@
     "/Users/nilslauvstad/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "/Users/nilslauvstad/.nuget/packages/system.valuetuple/4.5.0/system.valuetuple.4.5.0.nupkg.sha512",
     "/Users/nilslauvstad/.nuget/packages/microsoft.netcore.app.ref/9.0.12/microsoft.netcore.app.ref.9.0.12.nupkg.sha512",
-    "/Users/nilslauvstad/.nuget/packages/microsoft.netcore.app.runtime.osx-arm64/9.0.12/microsoft.netcore.app.runtime.osx-arm64.9.0.12.nupkg.sha512",
-    "/Users/nilslauvstad/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.12/microsoft.aspnetcore.app.ref.9.0.12.nupkg.sha512",
-    "/Users/nilslauvstad/.nuget/packages/microsoft.aspnetcore.app.runtime.osx-arm64/9.0.12/microsoft.aspnetcore.app.runtime.osx-arm64.9.0.12.nupkg.sha512"
+    "/Users/nilslauvstad/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.12/microsoft.aspnetcore.app.ref.9.0.12.nupkg.sha512"
   ],
   "logs": []
 }

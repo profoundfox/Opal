@@ -65,8 +65,6 @@ namespace Opal.Hierarchy
           (int)(bottomRight.Y - topLeft.Y)
       );
     
-      Console.WriteLine(rect.ToString());
-        
       return rect;
     }
 

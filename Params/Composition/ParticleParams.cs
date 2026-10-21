@@ -17,19 +17,20 @@ namespace Opal.Params
     public float SizeEnd { get; set; }
     public float Speed { get; set; }
     public float Angle { get; set; }
+    public Vector2 Gravity { get; set; }
 
     public static readonly ParticleParams Identity = new(
         texture: Core.Resources.Pixel, lifespan: 2f, colorStart: Color.Yellow,
         colorEnd: Color.Red, opacityStart: 1f,
         opacityEnd: 0f, sizeStart: 32f, sizeEnd: 4f,
-        speed: 100f, angle: 0f
+        speed: 100f, angle: 0f, Vector2.Zero
     );
 
     public ParticleParams(
         TextureRegion texture, float lifespan,
         Color colorStart, Color colorEnd, float opacityStart,
         float opacityEnd, float sizeStart, float sizeEnd,
-        float speed, float angle)
+        float speed, float angle, Vector2 gravity)
     {
       Texture = texture;
       Lifespan = lifespan;
@@ -41,6 +42,7 @@ namespace Opal.Params
       SizeEnd = sizeEnd;
       Speed = speed;
       Angle = angle;
+      Gravity = gravity;
     }
   }
 

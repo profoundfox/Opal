@@ -2,6 +2,7 @@ using Opal.Managers;
 
 using System;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace Opal.Tools
 {
@@ -47,5 +48,37 @@ namespace Opal.Tools
           (byte)(a.A * b.A / 255)
       );
     }
+
+    public static Color Hex(string hex)
+    {
+      hex = hex.TrimStart('#');
+
+      if (hex.Length == 3)
+        return new Color(
+            Convert.ToByte(hex.Substring(0, 1), 16),
+            Convert.ToByte(hex.Substring(1, 1), 16),
+            Convert.ToByte(hex.Substring(2, 1), 16));
+      if (hex.Length == 4)
+        return new Color(
+            Convert.ToByte(hex.Substring(0, 1), 16),
+            Convert.ToByte(hex.Substring(1, 1), 16),
+            Convert.ToByte(hex.Substring(2, 1), 16),
+            Convert.ToByte(hex.Substring(3, 1), 16));
+      if (hex.Length == 6)
+        return new Color(
+            Convert.ToByte(hex.Substring(0, 2), 16),
+            Convert.ToByte(hex.Substring(2, 2), 16),
+            Convert.ToByte(hex.Substring(4, 2), 16));
+      if (hex.Length == 8)
+        return new Color(
+            Convert.ToByte(hex.Substring(0, 2), 16),
+            Convert.ToByte(hex.Substring(2, 2), 16),
+            Convert.ToByte(hex.Substring(4, 2), 16),
+            Convert.ToByte(hex.Substring(6, 2), 16));
+      
+      Debug.WriteLine("Returning Color.White. Hex was invalid, it can only be 3, 4, 6 or 8 digits");
+      return Color.White;
+    }
+
   }
 }

@@ -29,7 +29,7 @@ namespace Opal.Hierarchy
       IntervalLeft = Params.Interval;
     }
 
-    private void Spawn(Vector2 pos)
+    private void Spawn(Vector2 position)
     {
       ParticleParams d = Params.Params;
 
@@ -39,7 +39,7 @@ namespace Opal.Hierarchy
           Params.Angle - Params.AngleVariance,
           Params.Angle + Params.AngleVariance);
 
-      Particle p = new(pos, d);
+      Particle p = new(position, d);
       _particles.Add(p);
     }
 
@@ -93,7 +93,7 @@ namespace Opal.Hierarchy
         p.Modulate(delta);
       }
 
-      _particles.RemoveAll(p => p.Info.IsFinished);
+      _particles.RemoveAll(p => p.IsFinished);
     }
 
     public override void _Submit(Canvas2D canvas)
@@ -108,11 +108,11 @@ namespace Opal.Hierarchy
 
         call.Params = CanvasParams.Identity with
         {
-          Position = particle.Info.Position,
-          Color = particle.Info.Color * particle.Info.Opacity,
+          Position = particle.Position,
+          Color = particle.Color * particle.Opacity,
           Rotation = 0f,
-          Origin = particle.Info.Origin,
-          Scale = new Vector2(particle.Info.Scale),
+          Origin = particle.Origin,
+          Scale = new Vector2(particle.Scale),
         };
         call.Key = BatchKey.Default with
         {
