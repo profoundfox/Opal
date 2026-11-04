@@ -165,7 +165,7 @@ namespace Opal.Input
 
     public int GetAxis(Buttons negative, Buttons positive)
     {
-      return (IsDown(positive) ? 1 : 0) - (IsDown(negative) ? -1 : 0);
+      return (IsDown(positive) ? 1 : 0) + (IsDown(negative) ? -1 : 0);
     }
 
     public Point GetAxis(Buttons negativeX, Buttons positiveX, Buttons negativeY, Buttons positiveY)

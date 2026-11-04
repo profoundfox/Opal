@@ -148,7 +148,7 @@ namespace Opal.Input
 
     public int GetAxis(MouseButton negative, MouseButton positive)
     {
-      return (IsDown(positive) ? 1 : 0) - (IsDown(negative) ? -1 : 0);
+      return (IsDown(positive) ? 1 : 0) + (IsDown(negative) ? -1 : 0);
     }
 
     public Point GetAxis(MouseButton negativeX, MouseButton positiveX, MouseButton negativeY, MouseButton positiveY)
