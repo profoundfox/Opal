@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Opal.Input
 {
-  public class GamePadInfo
+  public class GamePadInfo : InputInfo<Buttons>
   {
     private TimeSpan _vibrationTimeRemaining = TimeSpan.Zero;
 
@@ -85,99 +85,6 @@ namespace Opal.Input
     }
 
     /// <summary>
-    /// Returns the first currently pressed button, or Buttons.None if no button is pressed.
-    /// </summary>
-    public Buttons GetFirstButtonDown()
-    {
-      foreach (var button in ButtonArrays.AllGamePadButtons)
-      {
-        if (CurrentState.IsButtonDown(button))
-          return button;
-      }
-      return Buttons.None;
-    }
-
-    /// <summary>
-    /// Returns the first currently released button, or Buttons.None if no button is released.
-    /// </summary>
-    public Buttons GetFirstButtonUp()
-    {
-      foreach (var button in ButtonArrays.AllGamePadButtons)
-      {
-        if (CurrentState.IsButtonUp(button))
-          return button;
-      }
-      return Buttons.None;
-    }
-
-    /// <summary>
-    /// Returns the first button that was just pressed, or Buttons.None if no button is pressed.
-    /// </summary>
-    public Buttons GetFirstButtonJustPressed()
-    {
-      foreach (var button in ButtonArrays.AllGamePadButtons)
-      {
-        if (WasButtonJustPressed(button))
-          return button;
-      }
-      return Buttons.None;
-    }
-
-    /// <summary>
-    /// Returns the first button that was just released, or Buttons.None if no button is released.
-    /// </summary>
-    public Buttons GetFirstButtonJustReleased()
-    {
-      foreach (var button in ButtonArrays.AllGamePadButtons)
-      {
-        if (WasButtonJustReleased(button))
-          return button;
-      }
-      return Buttons.None;
-    }
-
-
-    /// <summary>
-    /// Returns a value that indicates whether the specified gamepad button is current down.
-    /// </summary>
-    /// <param name="button">The gamepad button to check.</param>
-    /// <returns>true if the specified gamepad button is currently down; otherwise, false.</returns>
-    public bool IsButtonDown(Buttons button)
-    {
-      return CurrentState.IsButtonDown(button);
-    }
-
-    /// <summary>
-    /// Returns a value that indicates whether the specified gamepad button is currently up.
-    /// </summary>
-    /// <param name="button">The gamepad button to check.</param>
-    /// <returns>true if the specified gamepad button is currently up; otherwise, false.</returns>
-    public bool IsButtonUp(Buttons button)
-    {
-      return CurrentState.IsButtonUp(button);
-    }
-
-    /// <summary>
-    /// Returns a value that indicates whether the specified gamepad button was just pressed on the current frame.
-    /// </summary>
-    /// <param name="button">The gamepad button to check.</param>
-    /// <returns>true if the specified gamepad button was just pressed on the current frame; otherwise, false.</returns>
-    public bool WasButtonJustPressed(Buttons button)
-    {
-      return CurrentState.IsButtonDown(button) && PreviousState.IsButtonUp(button);
-    }
-
-    /// <summary>
-    /// Returns a value that indicates whether the specified gamepad button was just released on the current frame.
-    /// </summary>
-    /// <param name="button">The gamepad button to check.</param>
-    /// <returns>true if the specified gamepad button was just released on the current frame; otherwise, false.</returns>
-    public bool WasButtonJustReleased(Buttons button)
-    {
-      return CurrentState.IsButtonUp(button) && PreviousState.IsButtonDown(button);
-    }
-
-    /// <summary>
     /// Sets the vibration for all motors of this gamepad.
     /// </summary>
     /// <param name="strength">The strength of the vibration from 0.0f (none) to 1.0f (full).</param>
@@ -196,7 +103,74 @@ namespace Opal.Input
       GamePad.SetVibration(PlayerIndex, 0.0f, 0.0f);
     }
 
+    public Buttons GetDown()
+    {
+      foreach (var button in ButtonArrays.AllGamePadButtons)
+      {
+        if (CurrentState.IsButtonDown(button))
+          return button;
+      }
+      return Buttons.None;
+    }
 
+    public bool IsDown(Buttons button)
+    {
+      return CurrentState.IsButtonDown(button);
+    }
 
+    public Buttons GetUp()
+    {
+      foreach (var button in ButtonArrays.AllGamePadButtons)
+      {
+        if (CurrentState.IsButtonUp(button))
+          return button;
+      }
+      return Buttons.None;
+    }
+
+    public bool IsUp(Buttons button)
+    {
+      return CurrentState.IsButtonUp(button);
+    }
+
+    public Buttons GetJustPressed()
+    {
+      foreach (var button in ButtonArrays.AllGamePadButtons)
+      {
+        if (PreviousState.IsButtonUp(button) && CurrentState.IsButtonDown(button))
+          return button;
+      }
+      return Buttons.None;
+    }
+
+    public bool WasJustPressed(Buttons button)
+    {
+      return CurrentState.IsButtonDown(button) && PreviousState.IsButtonUp(button);
+    }
+
+    public Buttons GetJustReleased()
+    {
+      foreach (var button in ButtonArrays.AllGamePadButtons)
+      {
+        if (PreviousState.IsButtonDown(button) && CurrentState.IsButtonUp(button))
+          return button;
+      }
+      return Buttons.None;
+    }
+
+    public bool WasJustReleased(Buttons button)
+    {
+      return CurrentState.IsButtonUp(button) && PreviousState.IsButtonDown(button);
+    }
+
+    public int GetAxis(Buttons negative, Buttons positive)
+    {
+      return (IsDown(positive) ? 1 : 0) - (IsDown(negative) ? -1 : 0);
+    }
+
+    public Point GetAxis(Buttons negativeX, Buttons positiveX, Buttons negativeY, Buttons positiveY)
+    {
+      return new Point(GetAxis(negativeX, positiveX), GetAxis(negativeY, positiveY));
+    }
   }
 }

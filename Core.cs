@@ -182,7 +182,7 @@ namespace Opal
       Token.Update(context, physicsSteps);
       
       #if DEBUG
-      if ((Input.Keyboard.IsKeyDown(Keys.Escape) || Input.CurrentGamePad.WasButtonJustPressed(Buttons.Start)) && ExitOnEsc)
+      if ((Input.Keyboard.IsDown(Keys.Escape) || Input.CurrentGamePad.WasJustPressed(Buttons.Start)) && ExitOnEsc)
         Exit();
       #endif
 

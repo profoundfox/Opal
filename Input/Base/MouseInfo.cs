@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Opal.Input
 {
-  public class MouseInfo
+  public class MouseInfo : InputInfo<MouseButton>
   {
     public MouseState PreviousState { get; private set; }
     public MouseState CurrentState { get; private set; }
@@ -51,79 +51,6 @@ namespace Opal.Input
       CurrentState = Mouse.GetState();
     }
 
-    public bool IsButtonDown(MouseButton button)
-    {
-      return GetButtonState(CurrentState, button) == ButtonState.Pressed;
-    }
-
-    /// <summary>
-    /// Returns the first currently pressed button, or Buttons.None if no button is pressed.
-    /// </summary>
-    public MouseButton GetFirstButtonDown()
-    {
-      foreach (var button in ButtonArrays.AllMouseButtons)
-      {
-        if (IsButtonDown(button))
-          return button;
-      }
-      return MouseButton.None;
-    }
-
-    public bool IsButtonUp(MouseButton button)
-    {
-      return GetButtonState(CurrentState, button) == ButtonState.Released;
-    }
-
-    /// <summary>
-    /// Returns the first currently released button, or Buttons.None if no button is released.
-    /// </summary>
-    public MouseButton GetFirstButtonUp()
-    {
-      foreach (var button in ButtonArrays.AllMouseButtons)
-      {
-        if (IsButtonUp(button))
-          return button;
-      }
-      return MouseButton.None;
-    }
-
-    public bool WasButtonJustPressed(MouseButton button)
-    {
-      return GetButtonState(CurrentState, button) == ButtonState.Pressed &&
-             GetButtonState(PreviousState, button) == ButtonState.Released;
-    }
-
-    /// <summary>
-    /// Returns the first button that was just pressed, or Buttons.None if no button is pressed.
-    /// </summary>
-    public MouseButton GetFirstButtonJustPressed()
-    {
-      foreach (var button in ButtonArrays.AllMouseButtons)
-      {
-        if (WasButtonJustPressed(button))
-          return button;
-      }
-      return MouseButton.None;
-    }
-    public bool WasButtonJustReleased(MouseButton button)
-    {
-      return GetButtonState(CurrentState, button) == ButtonState.Released &&
-             GetButtonState(PreviousState, button) == ButtonState.Pressed;
-    }
-
-    /// <summary>
-    /// Returns the first button that was just released, or Buttons.None if no button is released.
-    /// </summary>
-    public MouseButton GetFirstButtonJustReleased()
-    {
-      foreach (var button in ButtonArrays.AllMouseButtons)
-      {
-        if (WasButtonJustReleased(button))
-          return button;
-      }
-      return MouseButton.None;
-    }
-
     private ButtonState GetButtonState(MouseState state, MouseButton button)
     {
       return button switch
@@ -131,8 +58,8 @@ namespace Opal.Input
         MouseButton.Left => state.LeftButton,
         MouseButton.Middle => state.MiddleButton,
         MouseButton.Right => state.RightButton,
-        MouseButton.XButton1 => state.XButton1,
         MouseButton.XButton2 => state.XButton2,
+        MouseButton.XButton1 => state.XButton1,
         _ => ButtonState.Released
       };
     }
@@ -149,6 +76,84 @@ namespace Opal.Input
           CurrentState.XButton1,
           CurrentState.XButton2
       );
+    }
+
+    public MouseButton GetDown()
+    {
+      for (int i = 0; i < ButtonArrays.AllMouseButtons.Length; i++)
+      {
+        var button = ButtonArrays.AllMouseButtons[i];
+        if (GetButtonState(CurrentState, button) == ButtonState.Pressed)
+          return button;
+      }
+      return MouseButton.None;
+    }
+
+    public bool IsDown(MouseButton button)
+    {
+      return GetButtonState(CurrentState, button) == ButtonState.Pressed;
+    }
+
+    public MouseButton GetUp()
+    {
+      for (int i = 0; i < ButtonArrays.AllMouseButtons.Length; i++)
+      {
+        var button = ButtonArrays.AllMouseButtons[i];
+        if (GetButtonState(CurrentState, button) == ButtonState.Released)
+          return button;
+      }
+      return MouseButton.None;
+    }
+
+    public bool IsUp(MouseButton button)
+    {
+      return GetButtonState(CurrentState, button) == ButtonState.Released;
+    }
+
+    public MouseButton GetJustPressed()
+    {
+      for (int i = 0; i < ButtonArrays.AllMouseButtons.Length; i++)
+      {
+        var button = ButtonArrays.AllMouseButtons[i];
+        if (GetButtonState(CurrentState, button) == ButtonState.Pressed
+            && GetButtonState(PreviousState, button) == ButtonState.Released)
+          return button;
+      }
+      return MouseButton.None;
+    }
+
+    public bool WasJustPressed(MouseButton button)
+    {
+      return GetButtonState(CurrentState, button) == ButtonState.Pressed &&
+        GetButtonState(PreviousState, button) == ButtonState.Released;
+    }
+
+    public MouseButton GetJustReleased()
+    {
+      for (int i = 0; i < ButtonArrays.AllMouseButtons.Length; i++)
+      {
+        var button = ButtonArrays.AllMouseButtons[i];
+        if (GetButtonState(CurrentState, button) == ButtonState.Released &&
+            GetButtonState(PreviousState, button) == ButtonState.Pressed)
+          return button;
+      }
+      return MouseButton.None;
+    }
+
+    public bool WasJustReleased(MouseButton button)
+    {
+      return GetButtonState(CurrentState, button) == ButtonState.Released &&
+        GetButtonState(PreviousState, button) == ButtonState.Pressed;
+    }
+
+    public int GetAxis(MouseButton negative, MouseButton positive)
+    {
+      return (IsDown(positive) ? 1 : 0) - (IsDown(negative) ? -1 : 0);
+    }
+
+    public Point GetAxis(MouseButton negativeX, MouseButton positiveX, MouseButton negativeY, MouseButton positiveY)
+    {
+      return new Point(GetAxis(negativeX, positiveX), GetAxis(negativeY, positiveY));
     }
   }
 }
