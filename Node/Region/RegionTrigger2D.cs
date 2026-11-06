@@ -130,9 +130,9 @@ namespace Opal.Hierarchy
       base._Process(delta);
     }
 
-    public override void _PhysicsUpdate(float delta)
+    public override void _PhysicsProcess(float delta)
     {
-      base._PhysicsUpdate(delta);
+      base._PhysicsProcess(delta);
     }
 
     public override void _Submit(Canvas2D canvas)

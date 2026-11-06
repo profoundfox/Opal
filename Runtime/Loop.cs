@@ -17,7 +17,7 @@ namespace Opal.Runtime
 
       for (int i = 0; i < steps; i++)
       {
-        _PhysicsUpdate(context.FixedDelta);
+        _PhysicsProcess(context.FixedDelta);
       }
 
       _Process(context.FrameDelta);
@@ -37,7 +37,7 @@ namespace Opal.Runtime
       continuations.Enqueue(action);
     }
 
-    public virtual void _PhysicsUpdate(TimeSpan delta) { }
+    public virtual void _PhysicsProcess(TimeSpan delta) { }
     public virtual void _Process(TimeSpan delta) { }
   }
 }

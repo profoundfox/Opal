@@ -10,7 +10,7 @@ namespace Opal.Hierarchy
 {
   public class Node : Token,
     IEnterTree,
-    IPhysicsUpdate,
+    IPhysicsProcess,
     IProcess,
     ICall,
     IExitTree
@@ -176,8 +176,8 @@ namespace Opal.Hierarchy
     public virtual void _Process(float delta) { }
     public virtual void Process(float delta) { }
 
-    public virtual void _PhysicsUpdate(float delta) { }
-    public virtual void PhysicsUpdate(float delta) { }
+    public virtual void _PhysicsProcess(float delta) { }
+    public virtual void PhysicsProcess(float delta) { }
 
     public virtual void _Submit(Canvas2D canvas) { }
     public virtual void Submit(Canvas2D canvas) { }

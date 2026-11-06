@@ -237,7 +237,7 @@ namespace Opal.Managers
       Flush();
     }
 
-    public override void _PhysicsUpdate(TimeSpan delta)
+    public override void _PhysicsProcess(TimeSpan delta)
     {
       Flush();
 
@@ -250,10 +250,10 @@ namespace Opal.Managers
       {
         var inst = iterationBuffer[i];
 
-        if (inst is IPhysicsUpdate physics && !pendingRemove.Contains(inst))
+        if (inst is IPhysicsProcess physics && !pendingRemove.Contains(inst))
         {
-          physics._PhysicsUpdate((float)delta.TotalSeconds);
-          physics.PhysicsUpdate((float)delta.TotalSeconds);
+          physics._PhysicsProcess((float)delta.TotalSeconds);
+          physics.PhysicsProcess((float)delta.TotalSeconds);
         }
       }
 

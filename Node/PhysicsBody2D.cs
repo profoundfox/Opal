@@ -25,9 +25,9 @@ namespace Opal.Hierarchy
       base._ExitTree();
     }
 
-    public override void _PhysicsUpdate(float delta)
+    public override void _PhysicsProcess(float delta)
     {
-      base._PhysicsUpdate(delta);
+      base._PhysicsProcess(delta);
     }
 
     public override void _Process(float delta)
