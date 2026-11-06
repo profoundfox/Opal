@@ -17,6 +17,7 @@ namespace Opal.Runtime
     /// </para>
     /// </remarks>
     /// <param name="delta">The space between frames.</param>
+
     
     void _PhysicsUpdate(float delta);
     /// <summary>
@@ -31,5 +32,6 @@ namespace Opal.Runtime
     /// </para>
     /// </remarks>
     /// <param name="delta">The space between frames.</param>
-    void PhysicsUpdate(float delta); }
+    void PhysicsUpdate(float delta); 
+  }
 }

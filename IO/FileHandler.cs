@@ -81,11 +81,17 @@ namespace Opal.IO
           Write(bw, valueType, entry.Value);
         }
       }
+      else if (t.IsEnum)
+      {
+        Type underlying = Enum.GetUnderlyingType(t);
+        object rawValue = Convert.ChangeType(value, underlying);
+        Write(bw, underlying, rawValue);
+      }
     }
 
     private static bool Supported(Type t)
     {
-      if (t.IsPrimitive || t == typeof(string) || t == typeof(Vector2))
+      if (t.IsPrimitive || t == typeof(string) || t == typeof(Vector2) || t.IsEnum)
         return true;
 
       if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Dictionary<,>))
@@ -119,12 +125,12 @@ namespace Opal.IO
       {
         string name = br.ReadString();
 
-        if (!fields.TryGetValue(name, out var f))
-          continue;
-        
-        object value = Read(br, f.FieldType);
-        
-        f.SetValue(target, value);
+        if (fields.TryGetValue(name, out var f))
+        {
+          object value = Read(br, f.FieldType);
+          
+          f.SetValue(target, value);
+        }
       }
     }
 
@@ -163,6 +169,12 @@ namespace Opal.IO
           dict.Add(key, val);
         }
         return dict;
+      }
+      else if (t.IsEnum)
+      {
+        Type underlyingType = Enum.GetUnderlyingType(t);
+        object rawValue = Read(br, underlyingType);
+        return Enum.ToObject(t, rawValue);
       }
 
       return null;
